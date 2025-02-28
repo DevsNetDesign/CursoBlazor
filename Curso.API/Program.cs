@@ -1,7 +1,12 @@
+using Curso.API.Data;
+using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddDbContext<DataContex>(x => x.UseSqlServer("name=DockerConn"));
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -18,7 +23,7 @@ app.MapGet("/", (HttpContext contex) =>
 */
 app.Use(async (contex, next) =>
 {
-    if(contex.Request.Path == "/")
+    if (contex.Request.Path == "/")
     {
         contex.Response.Redirect("/swagger/index.html", permanent: false);
         return;
